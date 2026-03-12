@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buckner Lab — Antimicrobial Resistance · University of Birmingham</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:    #F7F6F2;
+    --white:    #FFFFFF;
+    --ink:      #1C2B3A;
+    --ink-soft: #4A5A6B;
+    --ink-faint:#8A99A8;
+    --sky:      #D6EAF5;
+    --sky-mid:  #A8D4EE;
+    --teal:     #3B8EA5;
+    --teal-deep:#256B81;
+    --seafoam:  #8ECFC4;
+    --sand:     #E8DFD0;
+    --border:   #DDE5EC;
+    --shadow:   rgba(28,43,58,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 4rem;
+    height: 68px;
+    background: rgba(247,246,242,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    display: flex; flex-direction: column; gap: 0;
+    text-decoration: none;
+  }
+  .nav-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .nav-logo-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 300;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0; right: 0; height: 1px;
+    background: var(--teal);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta {
+    background: var(--teal) !important;
+    color: white !important;
+    padding: 0.45rem 1.2rem;
+    font-size: 0.78rem !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--teal-deep) !important; transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    padding-top: 68px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  #home::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 70% at 80% 20%, rgba(168,212,238,0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 50% at 10% 80%, rgba(142,207,196,0.2) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 40% at 60% 90%, rgba(214,234,245,0.3) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-left {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 4rem 6rem 8rem;
+  }
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 0.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 300;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .hero-eyebrow-line { display: block; width: 32px; height: 1px; background: var(--teal); opacity: 0.6; }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.2rem, 6vw, 6rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 1.8rem;
+  }
+  h1 em { font-style: italic; color: var(--teal); }
+  .hero-desc {
+    font-size: 1rem; line-height: 1.8; color: var(--ink-soft);
+    max-width: 440px; margin-bottom: 2.5rem; font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--teal); color: white;
+    font-size: 0.78rem; font-weight: 400; letter-spacing: 0.06em;
+    padding: 0.85rem 2rem; text-decoration: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(59,142,165,0.25);
+  }
+  .btn-primary:hover { background: var(--teal-deep); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,142,165,0.3); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    color: var(--ink-soft); font-size: 0.78rem; text-decoration: none;
+    letter-spacing: 0.04em; padding-bottom: 2px;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--teal); border-color: var(--teal); }
+  .btn-ghost::after { content: '→'; transition: transform 0.2s; }
+  .btn-ghost:hover::after { transform: translateX(3px); }
+
+  .hero-stats {
+    position: absolute; bottom: 3.5rem; left: 8rem;
+    display: flex; gap: 3rem; z-index: 1;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif; font-weight: 400;
+    font-size: 2.4rem; color: var(--teal); line-height: 1; display: block;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint);
+  }
+
+  .hero-right {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center; padding: 4rem;
+  }
+  .cell-scene { position: relative; width: min(380px, 100%); aspect-ratio: 1; }
+  .cell-ring {
+    position: absolute; border-radius: 50%; border: 1px solid;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+  }
+  .ring-1 {
+    width: 100%; height: 100%;
+    border-color: rgba(59,142,165,0.15);
+    background: radial-gradient(ellipse at 38% 35%, rgba(168,212,238,0.18) 0%, transparent 65%);
+  }
+  .ring-2 { width: 72%; height: 72%; border-color: rgba(59,142,165,0.1); animation: slowRotate 30s linear infinite; }
+  .ring-3 {
+    width: 44%; height: 44%; border-color: rgba(142,207,196,0.3);
+    background: radial-gradient(ellipse at center, rgba(142,207,196,0.12) 0%, transparent 70%);
+    animation: slowRotate 20s linear infinite reverse;
+  }
+  @keyframes slowRotate {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+  .orbit-dot { position: absolute; border-radius: 50%; background: var(--teal); top: 50%; left: 50%; transform-origin: 0 0; }
+  .od-1 { width:7px; height:7px; opacity:0.5; animation:orbit1 12s linear infinite; }
+  .od-2 { width:4px; height:4px; opacity:0.35; animation:orbit2 18s linear infinite; }
+  .od-3 { width:5px; height:5px; opacity:0.45; background:var(--seafoam); animation:orbit3 9s linear infinite; }
+  .od-4 { width:3px; height:3px; opacity:0.3; animation:orbit4 15s linear infinite reverse; }
+  @keyframes orbit1 { from{transform:rotate(0deg) translateX(140px) translateY(-3.5px);} to{transform:rotate(360deg) translateX(140px) translateY(-3.5px);} }
+  @keyframes orbit2 { from{transform:rotate(90deg) translateX(100px) translateY(-2px);} to{transform:rotate(450deg) translateX(100px) translateY(-2px);} }
+  @keyframes orbit3 { from{transform:rotate(210deg) translateX(62px) translateY(-2.5px);} to{transform:rotate(570deg) translateX(62px) translateY(-2.5px);} }
+  @keyframes orbit4 { from{transform:rotate(45deg) translateX(130px) translateY(-1.5px);} to{transform:rotate(405deg) translateX(130px) translateY(-1.5px);} }
+  .cell-label {
+    position: absolute; bottom: -1.5rem; left: 50%; transform: translateX(-50%);
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 300;
+    color: var(--ink-faint); letter-spacing: 0.15em; white-space: nowrap;
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 7rem 8rem; }
+  .section-eyebrow {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-family: 'DM Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem;
+  }
+  .section-eyebrow::before { content:''; display:block; width:24px; height:1px; background:var(--teal); opacity:0.6; }
+  h2 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; color: var(--ink); margin-bottom: 1rem;
+  }
+  .section-lead { font-size: 0.95rem; line-height: 1.85; color: var(--ink-soft); max-width: 560px; margin-bottom: 4rem; }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ─── RESEARCH ─── */
+  #research { background: var(--white); }
+  .research-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .rc { background: var(--white); padding: 2.5rem 2.2rem; transition: background 0.3s; }
+  .rc:hover { background: var(--sky); }
+  .rc-num { font-family:'Cormorant Garamond',serif; font-size:0.85rem; font-weight:400; color:var(--teal); letter-spacing:0.1em; margin-bottom:1.2rem; opacity:0.7; }
+  .rc-title { font-size:0.95rem; font-weight:500; color:var(--ink); margin-bottom:0.8rem; line-height:1.4; }
+  .rc-desc { font-size:0.83rem; line-height:1.75; color:var(--ink-soft); }
+
+  /* ─── TEAM ─── */
+  #team { background: var(--cream); }
+  .team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2.5rem; }
+  .tc-avatar {
+    width: 100%; aspect-ratio: 1; background: var(--sky); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.2rem; overflow: hidden; transition: box-shadow 0.3s;
+  }
+  .tc:hover .tc-avatar { box-shadow: 0 8px 28px rgba(59,142,165,0.2); }
+  .tc-initials { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--teal); letter-spacing:0.05em; }
+  .tc-role { font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); margin-bottom:0.3rem; }
+  .tc-name { font-size:0.92rem; font-weight:500; color:var(--ink); margin-bottom:0.5rem; }
+  .tc-bio { font-size:0.78rem; line-height:1.65; color:var(--ink-soft); }
+
+  .alumni-section { margin-top:5rem; padding-top:4rem; border-top:1px solid var(--border); }
+  .alumni-heading { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:1.6rem; color:var(--ink-soft); margin-bottom:2rem; font-style:italic; }
+  .alumni-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+  .alumni-item { padding:1.2rem 1.4rem; background:var(--white); border:1px solid var(--border); transition:border-color 0.25s, box-shadow 0.25s; }
+  .alumni-item:hover { border-color:var(--sky-mid); box-shadow:0 4px 12px var(--shadow); }
+  .alumni-name { font-weight:500; font-size:0.88rem; margin-bottom:0.2rem; }
+  .alumni-info { font-size:0.73rem; color:var(--ink-faint); }
+  .alumni-now { font-size:0.73rem; color:var(--teal); margin-top:0.25rem; }
+
+  /* ─── PUBLICATIONS ─── */
+  #publications { background: var(--white); }
+  .pub-header-row { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:3rem; flex-wrap:wrap; gap:1rem; }
+  .pub-header-row .section-lead { margin-bottom:0; }
+  .pub-list { display:flex; flex-direction:column; }
+  .pub-item { display:grid; grid-template-columns:56px 1fr auto; gap:2rem; align-items:start; padding:1.8rem 0; border-bottom:1px solid var(--border); }
+  .pub-item:first-child { border-top:1px solid var(--border); }
+  .pub-year { font-family:'DM Mono',monospace; font-size:0.7rem; color:var(--teal); padding-top:0.2rem; font-weight:300; }
+  .pub-title { font-size:0.9rem; font-weight:500; line-height:1.55; color:var(--ink); margin-bottom:0.35rem; }
+  .pub-authors { font-size:0.78rem; color:var(--ink-faint); margin-bottom:0.25rem; }
+  .pub-journal { font-family:'Cormorant Garamond',serif; font-size:0.85rem; font-style:italic; color:var(--teal); }
+  .pub-oa { display:inline-block; font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.08em; padding:0.25rem 0.65rem; border:1px solid var(--sky-mid); color:var(--teal); background:var(--sky); white-space:nowrap; align-self:start; margin-top:0.2rem; }
+
+  /* ─── NEWS ─── */
+  #news { background: var(--cream); }
+  .news-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:2rem; }
+  .news-card { background:var(--white); border:1px solid var(--border); overflow:hidden; transition:box-shadow 0.3s, transform 0.3s; cursor:pointer; }
+  .news-card:hover { box-shadow:0 12px 36px var(--shadow); transform:translateY(-4px); }
+  .news-img { width:100%; aspect-ratio:16/9; overflow:hidden; }
+  .ns1 { background:linear-gradient(135deg, var(--sky) 0%, var(--sky-mid) 50%, rgba(142,207,196,0.6) 100%); width:100%;height:100%; }
+  .ns2 { background:linear-gradient(135deg, var(--sand) 0%, var(--sky) 70%); width:100%;height:100%; }
+  .ns3 { background:linear-gradient(135deg, rgba(142,207,196,0.5) 0%, var(--sky) 100%); width:100%;height:100%; }
+  .news-body { padding:1.6rem; }
+  .news-cat { display:inline-block; font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); background:var(--sky); padding:0.22rem 0.6rem; margin-bottom:0.75rem; }
+  .news-date { font-size:0.7rem; color:var(--ink-faint); margin-bottom:0.5rem; font-family:'DM Mono',monospace; font-weight:300; letter-spacing:0.05em; }
+  .news-title { font-size:0.9rem; font-weight:500; line-height:1.5; color:var(--ink); margin-bottom:0.7rem; }
+  .news-card.featured .news-title { font-size:1.05rem; }
+  .news-excerpt { font-size:0.8rem; line-height:1.65; color:var(--ink-soft); }
+
+  /* ─── JOIN ─── */
+  #join { background:var(--sky); position:relative; overflow:hidden; }
+  #join::before { content:''; position:absolute; top:-40%; right:-10%; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 65%); pointer-events:none; }
+  .join-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; position:relative; z-index:1; }
+  .join-why { margin-top:2.5rem; display:flex; flex-direction:column; gap:1rem; }
+  .why-row { display:flex; gap:1rem; align-items:flex-start; padding:1.2rem 1.4rem; background:rgba(255,255,255,0.55); border-left:2px solid var(--teal); }
+  .why-num { font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--teal); min-width:20px; padding-top:0.15rem; }
+  .why-text { font-size:0.86rem; line-height:1.65; color:var(--ink-soft); }
+  .why-text strong { color:var(--ink); font-weight:500; }
+  .positions { display:flex; flex-direction:column; gap:1rem; }
+  .pos-card { background:rgba(255,255,255,0.7); border:1px solid rgba(59,142,165,0.18); padding:1.8rem; transition:box-shadow 0.25s, border-color 0.25s; }
+  .pos-card:hover { box-shadow:0 6px 20px rgba(59,142,165,0.15); border-color:rgba(59,142,165,0.4); }
+  .pos-type { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal); margin-bottom:0.5rem; }
+  .pos-title { font-size:0.95rem; font-weight:500; margin-bottom:0.5rem; }
+  .pos-desc { font-size:0.82rem; line-height:1.65; color:var(--ink-soft); margin-bottom:1rem; }
+  .pos-tags { display:flex; gap:0.5rem; flex-wrap:wrap; }
+  .pos-tag { font-size:0.67rem; padding:0.2rem 0.65rem; border:1px solid var(--sky-mid); color:var(--teal-deep); background:var(--white); letter-spacing:0.04em; }
+
+  /* ─── CONTACT ─── */
+  #contact { background:var(--white); }
+  .contact-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:7rem; align-items:start; }
+  .contact-details { display:flex; flex-direction:column; gap:2rem; margin-top:1rem; }
+  .cd-label { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--teal); margin-bottom:0.3rem; }
+  .cd-value { font-size:0.88rem; line-height:1.6; color:var(--ink-soft); }
+  .social-links { display:flex; gap:1rem; flex-wrap:wrap; }
+  .social-link { font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; color:var(--teal); text-decoration:none; padding-bottom:2px; border-bottom:1px solid var(--sky-mid); transition:border-color 0.2s; }
+  .social-link:hover { border-color:var(--teal); }
+  .contact-form { display:flex; flex-direction:column; gap:1.2rem; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .fg { display:flex; flex-direction:column; gap:0.4rem; }
+  .fg label { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); }
+  .fg input, .fg select, .fg textarea { background:var(--cream); border:1px solid var(--border); color:var(--ink); font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:300; padding:0.8rem 1rem; outline:none; transition:border-color 0.2s, background 0.2s; appearance:none; border-radius:0; }
+  .fg input:focus, .fg select:focus, .fg textarea:focus { border-color:var(--teal); background:var(--white); }
+  .fg textarea { resize:vertical; min-height:110px; }
+  .fg select option { background:var(--white); }
+
+  /* ─── FOOTER ─── */
+  footer { background:var(--ink); color:rgba(255,255,255,0.45); padding:2.5rem 8rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem; }
+  .footer-brand { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:1rem; letter-spacing:0.06em; color:rgba(255,255,255,0.55); }
+  .footer-brand span { color:var(--sky-mid); }
+  .footer-nav { display:flex; gap:2rem; flex-wrap:wrap; }
+  .footer-nav a { font-size:0.72rem; letter-spacing:0.06em; color:rgba(255,255,255,0.35); text-decoration:none; transition:color 0.2s; }
+  .footer-nav a:hover { color:var(--sky-mid); }
+  .footer-copy { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; color:rgba(255,255,255,0.2); }
+
+  /* ─── FADE-UP ─── */
+  .fade-up { opacity:0; transform:translateY(22px); transition:opacity 0.65s ease, transform 0.65s ease; }
+  .fade-up.visible { opacity:1; transform:none; }
+  .fade-up:nth-child(2){transition-delay:0.08s} .fade-up:nth-child(3){transition-delay:0.16s}
+  .fade-up:nth-child(4){transition-delay:0.24s} .fade-up:nth-child(5){transition-delay:0.32s}
+  .fade-up:nth-child(6){transition-delay:0.4s}
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width:1100px){
+    section{padding:5rem 4rem;} nav{padding:0 2.5rem;} footer{padding:2rem 4rem;}
+    #home{grid-template-columns:1fr;} .hero-left{padding:5rem 4rem;} .hero-right{display:none;}
+    .hero-stats{left:4rem;} .research-grid{grid-template-columns:1fr 1fr;}
+    .team-grid{grid-template-columns:repeat(3,1fr);} .news-grid{grid-template-columns:1fr 1fr;}
+    .join-grid{grid-template-columns:1fr;} .contact-grid{grid-template-columns:1fr;gap:3rem;}
+  }
+  @media(max-width:700px){
+    nav{padding:0 1.5rem;} .nav-links{display:none;} section{padding:4rem 1.5rem;}
+    .hero-left{padding:3rem 1.5rem 6rem;} .hero-stats{left:1.5rem;bottom:2rem;gap:2rem;}
+    .research-grid{grid-template-columns:1fr;} .team-grid{grid-template-columns:1fr 1fr;}
+    .alumni-grid{grid-template-columns:1fr;} .news-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;} footer{flex-direction:column;align-items:flex-start;padding:2rem 1.5rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-logo">
+    <span class="nav-logo-name">Buckner Lab</span>
+    <span class="nav-logo-sub">University of Birmingham</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#research">Research</a></li>
+    <li><a href="#team">People</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#join">Join Us</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-line"></span>
+      School of Biosciences · Antimicrobial Resistance
+    </div>
+    <h1>Decoding<br><em>Resistance</em><br>at its Root.</h1>
+    <p class="hero-desc">
+      The Buckner Lab investigates the molecular mechanisms driving antimicrobial resistance —
+      developing strategies to protect patients and preserve the antibiotics we depend on.
+    </p>
+    <div class="hero-actions">
+      <a href="#research" class="btn-primary">Explore Our Research</a>
+      <a href="#join" class="btn-ghost">Join the Lab</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="cell-scene">
+      <div class="cell-ring ring-1"></div>
+      <div class="cell-ring ring-2"></div>
+      <div class="cell-ring ring-3"></div>
+      <div class="orbit-dot od-1"></div>
+      <div class="orbit-dot od-2"></div>
+      <div class="orbit-dot od-3"></div>
+      <div class="orbit-dot od-4"></div>
+      <span class="cell-label">Klebsiella pneumoniae · AMR isolate</span>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><span class="stat-num">14</span><span class="stat-label">Team members</span></div>
+    <div class="stat-item"><span class="stat-num">60+</span><span class="stat-label">Publications</span></div>
+    <div class="stat-item"><span class="stat-num">£2.4M</span><span class="stat-label">Active funding</span></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="research">
+  <div class="section-eyebrow">Research Themes</div>
+  <h2>What We Study</h2>
+  <p class="section-lead">A multi-disciplinary approach spanning molecular microbiology, genomics, and chemical biology — tackling antimicrobial resistance at every level.</p>
+  <div class="research-grid">
+    <div class="rc fade-up"><div class="rc-num">01</div><div class="rc-title">Resistance Mechanisms</div><p class="rc-desc">Deciphering the molecular machinery bacteria use to evade antibiotics — efflux pumps, target modification, and enzymatic inactivation — to identify exploitable vulnerabilities.</p></div>
+    <div class="rc fade-up"><div class="rc-num">02</div><div class="rc-title">Horizontal Gene Transfer</div><p class="rc-desc">Investigating how resistance genes spread between bacterial populations via plasmids, transposons, and integrons, and how environmental pressures accelerate this exchange.</p></div>
+    <div class="rc fade-up"><div class="rc-num">03</div><div class="rc-title">Novel Antimicrobials</div><p class="rc-desc">Collaborating with chemists and clinicians to characterise new antibiotic scaffolds and adjuvants, with a focus on targeting Gram-negative ESKAPE pathogens.</p></div>
+    <div class="rc fade-up"><div class="rc-num">04</div><div class="rc-title">Biofilm & Persistence</div><p class="rc-desc">Understanding how bacterial biofilms and persister cells survive antibiotic challenge, creating reservoirs of recalcitrant infection and enabling the evolution of heritable resistance.</p></div>
+    <div class="rc fade-up"><div class="rc-num">05</div><div class="rc-title">AMR Genomics & Surveillance</div><p class="rc-desc">Using whole-genome sequencing and bioinformatics to track the emergence and spread of resistant clones in clinical, agricultural, and environmental settings.</p></div>
+    <div class="rc fade-up"><div class="rc-num">06</div><div class="rc-title">Phage & Alternative Therapies</div><p class="rc-desc">Exploring bacteriophage biology, phage–antibiotic synergy, and other non-traditional approaches as part of the broader toolkit against resistant infection.</p></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="team">
+  <div class="section-eyebrow">People</div>
+  <h2>The Lab</h2>
+  <p class="section-lead">A diverse team of microbiologists, biochemists, and bioinformaticians united by curiosity and a shared mission.</p>
+  <div class="team-grid">
+    <div class="tc fade-up"><div class="tc-avatar"><span class="tc-initials">PB</span></div><div class="tc-role">Principal Investigator</div><div class="tc-name">Prof. [Name] Buckner</div><p class="tc-bio">Leads the group's research into AMR mechanisms and antimicrobial drug discovery. Fellow of the Microbiology Society.</p></div>
+    <div class="tc fade-up"><div class="tc-avatar"><span class="tc-initials">SR</span></div><div class="tc-role">Senior Research Fellow</div><div class="tc-name">Dr. Sarah Rahman</div><p class="tc-bio">Specialises in plasmid biology and horizontal gene transfer in clinical Enterobacteriaceae.</p></div>
+    <div class="tc fade-up"><div class="tc-avatar"><span class="tc-initials">JO</span></div><div class="tc-role">Postdoctoral Researcher</div><div class="tc-name">Dr. James Okafor</div><p class="tc-bio">Investigates biofilm formation and persister cell biology in Pseudomonas aeruginosa.</p></div>
+    <div class="tc fade-up"><div class="tc-avatar"><span class="tc-initials">LC</span></div><div class="tc-role">Postdoctoral Researcher</div><div class="tc-name">Dr. Li Chen</div><p class="tc-bio">Develops bioinformatics pipelines for AMR surveillance using whole-genome sequencing data.</p></div>
+    <div class="tc fade-up"><div class="tc-avatar"><span class="tc-initials">MV</span></div><div class="tc-role">PhD Candidate</div><div class="tc-name">Maria Vargas</div><p class="tc-bio">Third-year PhD student studying efflux pump regulation in carbapenem-resistant Klebsiella.</p></div>
+    <div class="tc fade-up"><div class="tc-avatar"><span class="tc-initials">TA</span></div><div class="tc-role">PhD Candidate</div><div class="tc-name">Tariq Al-Hassan</div><p class="tc-bio">Investigating phage–antibiotic synergy against MRSA using in vitro and in vivo models.</p></div>
+    <div class="tc fade-up"><div class="tc-avatar"><span class="tc-initials">EP</span></div><div class="tc-role">PhD Candidate</div><div class="tc-name">Eloise Perrin</div><p class="tc-bio">Characterising novel β-lactamase inhibitors in collaboration with the School of Chemistry.</p></div>
+    <div class="tc fade-up"><div class="tc-avatar"><span class="tc-initials">RN</span></div><div class="tc-role">Lab Manager</div><div class="tc-name">Rachel Nguyen</div><p class="tc-bio">Keeps everything running. Expert in BSL-2 containment work and high-throughput screening.</p></div>
+  </div>
+  <div class="alumni-section">
+    <h3 class="alumni-heading">Alumni</h3>
+    <div class="alumni-grid">
+      <div class="alumni-item"><div class="alumni-name">Dr. Ben Carter</div><div class="alumni-info">PhD 2022 · Mechanisms of colistin resistance</div><div class="alumni-now">→ Postdoc, Wellcome Sanger Institute</div></div>
+      <div class="alumni-item"><div class="alumni-name">Dr. Priya Mehta</div><div class="alumni-info">Postdoc 2019–2022</div><div class="alumni-now">→ Lecturer, University of Nottingham</div></div>
+      <div class="alumni-item"><div class="alumni-name">Dr. Sam Fletcher</div><div class="alumni-info">PhD 2021 · Transposon dynamics in ESKAPE</div><div class="alumni-now">→ Scientist, AstraZeneca</div></div>
+      <div class="alumni-item"><div class="alumni-name">Dr. Yuki Tanaka</div><div class="alumni-info">Postdoc 2018–2021</div><div class="alumni-now">→ Associate Prof., Osaka University</div></div>
+      <div class="alumni-item"><div class="alumni-name">Dr. Chioma Eze</div><div class="alumni-info">PhD 2020 · Biofilm resistance in UTI pathogens</div><div class="alumni-now">→ Clinical Microbiologist, NHS</div></div>
+      <div class="alumni-item"><div class="alumni-name">Dr. Alex Moore</div><div class="alumni-info">Postdoc 2020–2023</div><div class="alumni-now">→ Senior Scientist, GSK</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="publications">
+  <div class="section-eyebrow">Publications</div>
+  <div class="pub-header-row">
+    <h2>Selected Papers</h2>
+    <a href="#" class="btn-ghost" style="font-size:0.78rem;">Google Scholar profile</a>
+  </div>
+  <div class="pub-list">
+    <div class="pub-item fade-up"><div class="pub-year">2024</div><div><div class="pub-title">Structural basis for broad-spectrum β-lactamase inhibition by a novel bicyclic boron compound</div><div class="pub-authors">Buckner, R., Vargas, M., Perrin, E., Smith, T., Jones, C.A.</div><div class="pub-journal">Nature Chemical Biology</div></div><span class="pub-oa">Open Access</span></div>
+    <div class="pub-item fade-up"><div class="pub-year">2024</div><div><div class="pub-title">Convergent evolution of carbapenem resistance in Klebsiella pneumoniae ST258 across European ICUs</div><div class="pub-authors">Chen, L., Al-Hassan, T., Rahman, S., Buckner, R.</div><div class="pub-journal">The Lancet Microbe</div></div><span class="pub-oa">Open Access</span></div>
+    <div class="pub-item fade-up"><div class="pub-year">2023</div><div><div class="pub-title">Phage–antibiotic synergy disrupts MRSA biofilms through membrane perturbation and metabolic collapse</div><div class="pub-authors">Al-Hassan, T., Okafor, J., Buckner, R.</div><div class="pub-journal">PNAS</div></div><div></div></div>
+    <div class="pub-item fade-up"><div class="pub-year">2023</div><div><div class="pub-title">One Health surveillance reveals shared IncF plasmids carrying NDM-1 in human, animal and environmental E. coli</div><div class="pub-authors">Rahman, S., Chen, L., Okafor, J., Buckner, R.</div><div class="pub-journal">Nature Communications</div></div><span class="pub-oa">Open Access</span></div>
+    <div class="pub-item fade-up"><div class="pub-year">2022</div><div><div class="pub-title">Persister cells in Pseudomonas aeruginosa lung infection maintain a distinct transcriptional programme under antibiotic stress</div><div class="pub-authors">Okafor, J., Vargas, M., Buckner, R.</div><div class="pub-journal">EMBO Reports</div></div><div></div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="news">
+  <div class="section-eyebrow">News & Updates</div>
+  <h2>Latest From The Lab</h2>
+  <p class="section-lead">Announcements, new papers, grants, and events.</p>
+  <div class="news-grid">
+    <div class="news-card featured fade-up"><div class="news-img"><div class="ns1"></div></div><div class="news-body"><span class="news-cat">Grant Award</span><div class="news-date">March 2025</div><div class="news-title">Lab awarded £750k MRC grant to investigate plasmid fitness costs in clinical AMR strains</div><p class="news-excerpt">The Medical Research Council has funded a new three-year project examining the metabolic trade-offs of resistance plasmid carriage, with implications for AMR stewardship strategies.</p></div></div>
+    <div class="news-card fade-up"><div class="news-img"><div class="ns2"></div></div><div class="news-body"><span class="news-cat">New Paper</span><div class="news-date">February 2025</div><div class="news-title">Structural study in Nature Chemical Biology reveals new inhibitor binding mode</div><p class="news-excerpt">Eloise Perrin's PhD work uncovers a previously unknown allosteric site in class A β-lactamases.</p></div></div>
+    <div class="news-card fade-up"><div class="news-img"><div class="ns3"></div></div><div class="news-body"><span class="news-cat">People</span><div class="news-date">January 2025</div><div class="news-title">Welcome to Dr. James Okafor, joining from Imperial College London</div><p class="news-excerpt">James brings expertise in Pseudomonas persistence and will lead our new biofilm programme.</p></div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="join">
+  <div class="join-grid">
+    <div>
+      <div class="section-eyebrow">Join Us</div>
+      <h2>Work With Us</h2>
+      <p class="section-lead" style="margin-bottom:0;">We welcome passionate, curious scientists at all career stages. The Buckner Lab is committed to a diverse, inclusive, and collaborative environment where everyone can do their best science.</p>
+      <div class="join-why">
+        <div class="why-row"><span class="why-num">01</span><p class="why-text"><strong>Impactful science.</strong> Work on a WHO priority public health threat with real clinical relevance and global reach.</p></div>
+        <div class="why-row"><span class="why-num">02</span><p class="why-text"><strong>Cross-disciplinary training.</strong> Gain skills spanning molecular biology, genomics, structural biology, and chemical biology.</p></div>
+        <div class="why-row"><span class="why-num">03</span><p class="why-text"><strong>A vibrant city.</strong> Birmingham is affordable, well-connected, and a genuinely great place to live and work.</p></div>
+        <div class="why-row"><span class="why-num">04</span><p class="why-text"><strong>Strong mentorship.</strong> We invest in your development, career, and wellbeing — not just your experiments.</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-eyebrow" style="margin-bottom:1.5rem;">Open Positions</div>
+      <div class="positions">
+        <div class="pos-card fade-up"><div class="pos-type">PhD Studentship · Funded</div><div class="pos-title">Mechanisms of AMR Plasmid Stabilisation</div><p class="pos-desc">BBSRC DTP-funded studentship investigating molecular drivers of plasmid persistence in clinical Enterobacteriaceae. Start date October 2025.</p><div class="pos-tags"><span class="pos-tag">Molecular Microbiology</span><span class="pos-tag">Plasmid Biology</span><span class="pos-tag">BSc/MSc Required</span></div></div>
+        <div class="pos-card fade-up"><div class="pos-type">Postdoctoral Research Fellow</div><div class="pos-title">AMR Genomics & Bioinformatics</div><p class="pos-desc">MRC-funded postdoc to develop bioinformatic tools for resistance plasmid tracking in large-scale clinical datasets. 3-year appointment.</p><div class="pos-tags"><span class="pos-tag">Bioinformatics</span><span class="pos-tag">WGS</span><span class="pos-tag">Python / R</span></div></div>
+        <div class="pos-card fade-up"><div class="pos-type">Informal Enquiries Welcome</div><div class="pos-title">Fellowship Applications</div><p class="pos-desc">Interested in EMBO, Marie Skłodowska-Curie, BBSRC, or Wellcome fellowships? We actively support strong candidates — get in touch early.</p><div class="pos-tags"><span class="pos-tag">Fellowship Support</span><span class="pos-tag">Any Theme</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="contact">
+  <div class="section-eyebrow">Contact</div>
+  <h2>Get In Touch</h2>
+  <div class="contact-grid">
+    <div>
+      <p style="font-size:0.93rem;line-height:1.85;color:var(--ink-soft);max-width:360px;margin-bottom:2.5rem;">Whether you're a prospective student, potential collaborator, or journalist — we'd love to hear from you.</p>
+      <div class="contact-details">
+        <div><div class="cd-label">Location</div><div class="cd-value">School of Biosciences<br>University of Birmingham<br>Edgbaston, Birmingham B15 2TT</div></div>
+        <div><div class="cd-label">Email</div><div class="cd-value">bucknerlab@bham.ac.uk</div></div>
+        <div><div class="cd-label">Follow Us</div><div class="social-links"><a href="#" class="social-link">X / Twitter</a><a href="#" class="social-link">Bluesky</a><a href="#" class="social-link">Google Scholar</a><a href="#" class="social-link">ORCID</a></div></div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="fg"><label>Name</label><input type="text" placeholder="Your name"></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+      </div>
+      <div class="fg"><label>Reason for contact</label><select><option value="" disabled selected>Select a reason…</option><option>PhD enquiry</option><option>Postdoc / fellowship</option><option>Collaboration</option><option>Media / press</option><option>Other</option></select></div>
+      <div class="fg"><label>Message</label><textarea placeholder="Tell us a little about yourself and what you're interested in…"></textarea></div>
+      <button class="btn-primary" style="align-self:flex-start;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;" onclick="alert('Thank you — we will be in touch shortly.')">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Buckner <span>Lab</span> · University of Birmingham</div>
+  <nav class="footer-nav">
+    <a href="#research">Research</a><a href="#team">People</a><a href="#publications">Publications</a>
+    <a href="#news">News</a><a href="#join">Join Us</a><a href="#contact">Contact</a>
+  </nav>
+  <div class="footer-copy">© 2025 The Buckner Lab</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  const secs = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+  window.addEventListener('scroll', () => {
+    let cur='';
+    secs.forEach(s => { if(scrollY >= s.offsetTop-90) cur=s.id; });
+    links.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--teal)' : ''; });
+  });
+</script>
+</body>
+</html>
