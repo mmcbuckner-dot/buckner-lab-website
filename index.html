@@ -458,17 +458,90 @@
 <section id="publications">
   <div class="section-eyebrow">Publications</div>
   <div class="pub-header-row">
-    <h2>Selected Papers</h2>
-    <a href="#" class="btn-ghost" style="font-size:0.78rem;">Google Scholar profile</a>
+    <h2>Publications</h2>
+    <a href="https://orcid.org/0000-0001-9884-2318" target="_blank" class="btn-ghost" style="font-size:0.78rem;">View ORCID profile</a>
   </div>
-  <div class="pub-list">
-    <div class="pub-item fade-up"><div class="pub-year">2024</div><div><div class="pub-title">Structural basis for broad-spectrum β-lactamase inhibition by a novel bicyclic boron compound</div><div class="pub-authors">Buckner, R., Vargas, M., Perrin, E., Smith, T., Jones, C.A.</div><div class="pub-journal">Nature Chemical Biology</div></div><span class="pub-oa">Open Access</span></div>
-    <div class="pub-item fade-up"><div class="pub-year">2024</div><div><div class="pub-title">Convergent evolution of carbapenem resistance in Klebsiella pneumoniae ST258 across European ICUs</div><div class="pub-authors">Chen, L., Al-Hassan, T., Rahman, S., Buckner, R.</div><div class="pub-journal">The Lancet Microbe</div></div><span class="pub-oa">Open Access</span></div>
-    <div class="pub-item fade-up"><div class="pub-year">2023</div><div><div class="pub-title">Phage–antibiotic synergy disrupts MRSA biofilms through membrane perturbation and metabolic collapse</div><div class="pub-authors">Al-Hassan, T., Okafor, J., Buckner, R.</div><div class="pub-journal">PNAS</div></div><div></div></div>
-    <div class="pub-item fade-up"><div class="pub-year">2023</div><div><div class="pub-title">One Health surveillance reveals shared IncF plasmids carrying NDM-1 in human, animal and environmental E. coli</div><div class="pub-authors">Rahman, S., Chen, L., Okafor, J., Buckner, R.</div><div class="pub-journal">Nature Communications</div></div><span class="pub-oa">Open Access</span></div>
-    <div class="pub-item fade-up"><div class="pub-year">2022</div><div><div class="pub-title">Persister cells in Pseudomonas aeruginosa lung infection maintain a distinct transcriptional programme under antibiotic stress</div><div class="pub-authors">Okafor, J., Vargas, M., Buckner, R.</div><div class="pub-journal">EMBO Reports</div></div><div></div></div>
+  <div id="pub-list" class="pub-list">
+    <div style="padding:2rem 0; color:var(--ink-faint); font-family:'DM Mono',monospace; font-size:0.75rem; letter-spacing:0.1em;">
+      Loading publications…
+    </div>
   </div>
 </section>
+
+<script>
+  async function loadPublications() {
+    const orcid = '0000-0001-9884-2318';
+    const container = document.getElementById('pub-list');
+    try {
+      // Fetch the list of works
+      const res = await fetch(`https://pub.orcid.org/v3.0/${orcid}/works`, {
+        headers: { 'Accept': 'application/json' }
+      });
+      const data = await res.json();
+      const groups = data.group || [];
+
+      if (groups.length === 0) {
+        container.innerHTML = '<p style="color:var(--ink-faint);font-size:0.85rem;">No publications found.</p>';
+        return;
+      }
+
+      // Fetch details for each work (up to 50)
+      const works = await Promise.all(
+        groups.slice(0, 50).map(async (group) => {
+          const summary = group['work-summary'][0];
+          const putCode = summary['put-code'];
+          const detailRes = await fetch(`https://pub.orcid.org/v3.0/${orcid}/work/${putCode}`, {
+            headers: { 'Accept': 'application/json' }
+          });
+          return detailRes.json();
+        })
+      );
+
+      // Sort by year descending
+      works.sort((a, b) => {
+        const yearA = a['publication-date']?.year?.value || 0;
+        const yearB = b['publication-date']?.year?.value || 0;
+        return yearB - yearA;
+      });
+
+      container.innerHTML = works.map(work => {
+        const title = work.title?.title?.value || 'Untitled';
+        const year = work['publication-date']?.year?.value || '—';
+        const journal = work['journal-title']?.value || '';
+        const doi = work['external-ids']?.['external-id']
+          ?.find(id => id['external-id-type'] === 'doi')
+          ?.['external-id-value'];
+        const doiUrl = doi ? `https://doi.org/${doi}` : null;
+
+        // Build authors string from contributors
+        const contributors = work.contributors?.contributor || [];
+        const authors = contributors.length > 0
+          ? contributors.slice(0, 6).map(c => c['credit-name']?.value || '').filter(Boolean).join(', ')
+            + (contributors.length > 6 ? ' et al.' : '')
+          : '';
+
+        return `
+          <div class="pub-item">
+            <div class="pub-year">${year}</div>
+            <div>
+              ${doiUrl
+                ? `<a href="${doiUrl}" target="_blank" class="pub-title" style="text-decoration:none;color:var(--ink);transition:color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--ink)'">${title}</a>`
+                : `<div class="pub-title">${title}</div>`
+              }
+              ${authors ? `<div class="pub-authors">${authors}</div>` : ''}
+              ${journal ? `<div class="pub-journal">${journal}</div>` : ''}
+            </div>
+            ${doiUrl ? `<a href="${doiUrl}" target="_blank" class="pub-oa" style="text-decoration:none;">DOI →</a>` : '<div></div>'}
+          </div>`;
+      }).join('');
+
+    } catch (err) {
+      container.innerHTML = '<p style="color:var(--ink-faint);font-size:0.85rem;">Could not load publications. Please try refreshing.</p>';
+    }
+  }
+
+  loadPublications();
+</script>
 
 <hr class="divider">
 
