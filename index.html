@@ -647,7 +647,7 @@ style="display:inline-block; margin-top:1rem; font-family:'DM Sans',sans-serif; 
   window.addEventListener('scroll', () => {
     let cur='';
     secs.forEach(s => { if(scrollY >= s.offsetTop-90) cur=s.id; });
-    links.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--teal)' : ''; });
+   links.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--teal)' : '#1C2B3A'; });
   });
 </script>
 </body>
