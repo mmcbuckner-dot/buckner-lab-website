@@ -644,11 +644,13 @@ style="display:inline-block; margin-top:1rem; font-family:'DM Sans',sans-serif; 
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
   const secs = document.querySelectorAll('section[id]');
   const links = document.querySelectorAll('.nav-links a:not(.nav-cta)');
-  window.addEventListener('scroll', () => {
+ function updateNav() {
     let cur='';
     secs.forEach(s => { if(scrollY >= s.offsetTop-90) cur=s.id; });
-   links.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--teal)' : '#1C2B3A'; });
-  });
+    links.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--teal)' : '#1C2B3A'; });
+  }
+  window.addEventListener('scroll', updateNav);
+  updateNav();
 </script>
 </body>
 </html>
