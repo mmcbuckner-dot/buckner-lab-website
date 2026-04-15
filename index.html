@@ -67,15 +67,15 @@
   }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
   .nav-links a {
-    color: #1C2B3A;
-    opacity: 1 !important;
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    transition: color 0.2s;
-    position: relative;
-  }
+  color: var(--ink);
+  opacity: 1 !important;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+  position: relative;
+}
   .nav-links a::after {
     content: '';
     position: absolute; bottom: -3px; left: 0; right: 0; height: 1px;
@@ -644,11 +644,19 @@ style="display:inline-block; margin-top:1rem; font-family:'DM Sans',sans-serif; 
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
   const secs = document.querySelectorAll('section[id]');
   const links = document.querySelectorAll('.nav-links a:not(.nav-cta)');
- function updateNav() {
-    let cur='';
-    secs.forEach(s => { if(scrollY >= s.offsetTop-90) cur=s.id; });
-    links.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--teal)' : '#1C2B3A'; });
-  }
+function updateNav() {
+  let cur = '';
+  secs.forEach(s => {
+    if (scrollY >= s.offsetTop - 90) cur = s.id;
+  });
+
+  links.forEach(a => {
+    a.classList.toggle(
+      'active',
+      a.getAttribute('href') === '#' + cur
+    );
+  });
+}
   window.addEventListener('scroll', updateNav);
   updateNav();
 </script>
