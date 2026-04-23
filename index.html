@@ -673,7 +673,16 @@ style="display:inline-block; margin-top:1rem; font-family:'DM Sans',sans-serif; 
   <div class="footer-copy">© 2025 The Buckner Lab</div>
 </footer>
 
- const secs = document.querySelectorAll('section[id]');
+ <script>
+   const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  const secs = document.querySelectorAll('section[id]');
   const links = document.querySelectorAll('.nav-links a:not(.nav-cta)');
 
   function updateNav() {
@@ -693,7 +702,7 @@ style="display:inline-block; margin-top:1rem; font-family:'DM Sans',sans-serif; 
   window.addEventListener('scroll', updateNav);
   updateNav();
 
-  const nav = document.querySelector('nav');
+    const nav = document.querySelector('nav');
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) {
