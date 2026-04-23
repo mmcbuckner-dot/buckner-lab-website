@@ -36,7 +36,7 @@
   }
 
   /* ─── NAV ─── */
-  nav {
+nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -45,14 +45,25 @@
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
-  height: 68px;
+  height: 72px;
   padding: 0 4rem;
 
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+
+  transition: all 0.3s ease;
+}
+nav.scrolled {
+  height: 60px;
   background: rgba(255,255,255,0.98);
-  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
+  box-shadow: 0 6px 20px rgba(28,43,58,0.08);
+}
+  nav.scrolled .nav-links {
+  gap: 2rem;
 }
   .nav-logo {
     display: flex; flex-direction: column; gap: 0;
@@ -685,5 +696,14 @@ function updateNav() {
   window.addEventListener('scroll', updateNav);
   updateNav();
 </script>
+const nav = document.querySelector('nav');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
 </body>
 </html>
